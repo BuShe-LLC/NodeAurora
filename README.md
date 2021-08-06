@@ -24,8 +24,9 @@ new Aurora().initialize(@NonNull Context context, @NonNull String LibraryDir, @N
 ```  
 
 ## 原生支持库 BuShe Native Support Library  
-你可以在 [此处](https://github.com/BuShe-LLC/NodeAurora/NativeSupport/) 找到。   
+你可以在 [此处](https://github.com/BuShe-LLC/NodeAurora/tree/main/NativeSupport) 找到。   
 我们建议你构建适用于不同 ABI 的 APK，并将支持库放在 assets 中，运行时引用。  
+NOTICE: 你需要解压缩支持库。  
 
 ### 其他
 源代码会在构建版本稳定时放出。
