@@ -1,40 +1,69 @@
-# NodeAurora
-Aurora Runtime: Node.js runtime for android
+# Aurora Node Runtime
+A native Node runtime library for Android.  
+[Simplified Chinese](https://https://github.com/BuShe-LLC/NodeAurora/tree/main/RADEME_CN.md)  
 
-## 用法
-Step 1: 在你的项目级 build.gradle 中的 buildscript 节点中添加 Maven 仓库：*  
+### Importing Dependencies
+To enable Aurora Node Runtime in your app:
+
+In your root-level (project-level) Gradle file (build.gradle), check that you have BuShe LLC's Maven repository, as well.
+
 ```
-repositories {
-    maven { url 'https://maven.aurora-nature.asia' }
+buildscript {
+
+  repositories {
+    // Check that you have the following line (if not, add it):
+    maven { url 'https://maven.aurora-nature.asia' } // BuShe LLC's Maven repository
+  }
+
+}
+
+allprojects {
+  // ...
+
+  repositories {
+    // Check that you have the following line (if not, add it):
+    maven { url 'https://maven.aurora-nature.asia' } // BuShe LLC's Maven repository
+    // ...
+  }
 }
 ```  
-* 你也可以直接在 Release 中获取 AAR 导入项目。    
+Using the BuShe Aurora Node, declare the dependencies for the Aurora Node Runtime in your app. Declare them in your module (app-level) Gradle file (usually app/build.gradle).
 
-Step 2: 在模块级 build.gradle 中导入包并 Sync 你的 Gradle 项目 
 ```
-implementation 'io.bushe.export.aurora.nodejs:latest'  
+dependencies {
+  // ...
+  // Declare the dependency for the BuShe Aurora Node
+  implementation 'io.bushe.export.aurora:latest'
+}
 ```
-* 或使用 implementation file() 本地导入           
 
-Step 3: 在你想要创建一个 Node.js 环境时访问以下方法：
+Sync your app to ensure that all dependencies have the necessary versions.
+
+### Usage
+- Step 1: To build the Node runtime environment. You need to import the Native Dynamic Support Library first, and we provide a way to do that:
 ```java
-new Aurora().initialize(@NonNull Context context, @NonNull String LibraryDir, @NonNull String NodeAppDir)
-// NOTICE: LibraryDir 指定为你的 BuShe Native Support Library 路径
-// NOTICE: NodeAppDir 指定为你的 Node.js App 目录，运行环境会尝试访问 NodeAppPath/index.js
-```  
+ // This function will copy the dynamic support library to the application file directory to gain execution access.
+ new Linker().linker_initialize(Context context, String NativeDynamicSupportLibraryPath,
+         new LinkerInterface() {
+         
+             @Override
+             public void succeed() {
+                 //TODO: Now you can create a Node process using the following function.
+                 //TODO: String 'NodeAppDir' is the parent directory of your Node application, and Runtime will try to run NodeAppDir/index.js.
+                 new Aurora().initialize(Context context, String NodeAppDir);
+             }
+             
+             @Override
+             public void error(String s) {
+                 //TODO: Handler the error in your own way.
+             }
+        }
+ );
+```
+Please note in particular that the runtime library will access the dynamic support library path you provide. and copy it to the library folder in the application's file directory (/data/user/0/PackageName/files/library/), which you can do yourself. The runtime library will check if the dynamic support library already exists before performing the copy.          
 
-## 原生支持库 BuShe Native Support Library  
-你可以在 [此处](https://github.com/BuShe-LLC/NodeAurora/tree/main/NativeSupport) 找到。   
-我们建议你构建适用于不同 ABI 的 APK，并将支持库放在 assets 中，运行时引用。  
-NOTICE: 你需要解压缩支持库。  
+- Step 2: You can now see the full runtime stream in the Android Log.  
 
-### 其他
-源代码会在构建版本稳定时放出。
-
-### 致谢
-非常感谢以下项目对此项目的开发提供了帮助：  
-[Termux](https://github.com/termux/)  
-非常感谢以下开发者在百忙之中为此项目进行贡献或指导：  
-@ Marek Kowalski  
-@ Wiktor Sieprawski  
-@ addaleax  
+### Native Dynamic Support Library
+You can download from [there](https://github.com/BuShe-LLC/NodeAurora/tree/main/NativeSupport).
+Please take care to select the dynamic native support library for the ABI that is applicable to your device.
