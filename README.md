@@ -1,18 +1,18 @@
 # Aurora Node Runtime
 A native Node runtime library for Android.  
-[Simplified Chinese](https://github.com/BuShe-LLC/NodeAurora/tree/main/RADEME_CN.md)  
+[Simplified Chinese](https://github.com/BuShe-LLC/NodeAurora/blob/main/README_CN.md)  
 
 ### Importing Dependencies
 To enable Aurora Node Runtime in your app:
 
-In your root-level (project-level) Gradle file (build.gradle), check that you have BuShe LLC's Maven repository, as well.
+In your root-level (project-level) Gradle file (build.gradle), check that you have BuShe Developer Program's Maven repository, as well.
 
 ```groovy
 buildscript {
 
   repositories {
     // Check that you have the following line (if not, add it):
-    maven { url 'https://maven.aurora-nature.asia' } // BuShe LLC's Maven repository
+    maven { url 'https://maven.aurora-nature.asia' } // BuShe Developer Program's Maven repository
   }
 
 }
@@ -22,7 +22,7 @@ allprojects {
 
   repositories {
     // Check that you have the following line (if not, add it):
-    maven { url 'https://maven.aurora-nature.asia' } // BuShe LLC's Maven repository
+    maven { url 'https://maven.aurora-nature.asia' } // BuShe Developer Program's Maven repository
     // ...
   }
 }
